@@ -41,7 +41,7 @@ plot(used_cars$Year, used_cars$Price, main = "Car Price vs Year", xlab = "Year",
 
 
 
+[Introduction to Data Science:rafalab.dfci.harvard.edu/dsbook/regression.html](https://rafalab.dfci.harvard.edu/dsbook/regression.html)
 
-[Regression Book](https://rafalab.dfci.harvard.edu/dsbook/regression.html)
 
 
