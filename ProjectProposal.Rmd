@@ -1,0 +1,47 @@
+---
+title: "Project 1"
+output:
+  pdf_document: default
+  word_document: default
+date: "2024-09-30"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+The dataset, used_cars_data.csv, contains information about used cars and their sale prices. There are several variables present in the dataset, including: manufacturer: the car manufacturer (e.g. Toyota, Ford, Honda, etc.) model: the specific car model (e.g. Corolla, Mustang, Accord, etc.) Location: The place of the car (e.g. Mumbai, Pune, Jaipur, etc.) year: the year the car was released (e.g. 2010, 2014, 2015, etc.) Engine: the number of cylinders in the engine Fuel_type : the type of fuel the car uses (e.g. gas, diesel, electric) Kilometer_Driven: the total distance the car has traveled transmission: the type of transmission (e.g. automatic, manual) Using this data, we can develop a model to predict the sale price of a used car based on these variables.
+Research Question: We want to use our model to predict the price of a new car based on the features (such as years, kilometer_driven, engine, fuel_type etc). We would create a reggression model to predict the price of a used car based on its features such as the year of the car, distance it has traveled(kilometers), engine capacity. One approach would be to use a multilinear regression and quadratic regression. This model uses the equation $Y = B_0 + B_1 x_1 + B_2 x_2$, where the response variable, B’s are coefficients and x’s are the change in Y when x’s goes up by 1. To implement these models, we would first need to pre-process the dataset, such as filling any missing values and normalizing numerical data. 
+
+Exploratory Data Analysis (EDA)
+```{r}
+library(tidyverse)
+
+used_cars <- read.csv("used_cars_data.csv")
+
+summary(used_cars)
+
+colSums(is.na(used_cars))
+
+# 2. Distribution of Prices
+ggplot(used_cars, aes(x = Price)) +
+  geom_histogram(bins = 30, fill = "blue", alpha = 0.7) +
+  labs(title = "Distribution of Car Prices", x = "Price", y = "Frequency")
+
+
+# Car Price vs Year
+plot(used_cars$Year, used_cars$Price, main = "Car Price vs Year", xlab = "Year", ylab = "Price(in thousand USD)")
+
+```
+
+
+
+
+
+[Regression Book](https://rafalab.dfci.harvard.edu/dsbook/regression.html)
+
+
