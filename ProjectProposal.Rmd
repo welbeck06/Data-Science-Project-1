@@ -45,4 +45,6 @@ plot(used_cars$Year, used_cars$Price, main = "Car Price vs Year", xlab = "Year",
 [Introduction to Data Science:rafalab.dfci.harvard.edu/dsbook/regression.html](https://rafalab.dfci.harvard.edu/dsbook/regression.html)
 
 
+[Kaggle Used Car Dataset](https://www.kaggle.com/datasets/ayushparwal2026/cars-dataset?resource=download)
 
+[Introduction to Statistical Learning](https://www.statlearning.com)
