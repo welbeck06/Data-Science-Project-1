@@ -1,0 +1,210 @@
+---
+title: 'Statistical Analysis of Used Cars Data'
+author: Welbeck Achiampong, Muhyadin Yusuf,  Minh Pham, and Jordan Addo
+date: \today
+output: 
+  pdf_document:
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+geometry: margin=0.85in
+fontsize: 12pt
+header-includes:
+- \usepackage{setspace}\onehalfspacing
+---
+
+\listoffigures
+\listoftables
+
+\newpage
+
+```{r, message = FALSE, warning = FALSE}
+# set your global options here and load your packages
+knitr::opts_chunk$set(fig.width = 10, fig.height = 5, echo = TRUE, eval = TRUE)
+library(knitr)
+library(tidyverse)
+used_cars <- read.csv("used_cars_data.csv")
+```
+
+# Introduction
+
+This project aims to explore the used car market by analyzing the factors that influence the pricing of used cars. With the increasing demand for used vehicles, understanding how various features like the manufacturer, model, year, engine type, and kilometers driven impact the price can help consumers and dealers alike make informed decisions. The dataset, `used_cars_data.csv`, contains information on these attributes, offering insights into how different features contribute to the sale price of a car. By developing a predictive model, we can provide a more accurate estimate of a used car's value based on its characteristics, making this research valuable for both buyers and sellers in the used car market.
+
+To address this, we will build a linear regression model to estimate the price based on these features. The model will follow the general equation $Y = B_0 + B_1 x_1 + B_2 x_2$ where $Y$ is the response variable(pricted price) and the $B's$ represents the coefficients and the $x's$ are the input variables. Through pre-processing the data and ensuring it is clean and normalized yo be able to accurately predict the price of used cars.
+
+## Reserach questions
+
+Our research question is to determine whether a model can effectively predict the price of a used car using variables such as the year of the car, kilometers driven, engine capacity, and fuel type.
+
+
+## Data set desription
+
+The dataset, used_cars_data.csv, contains information about used cars and their sale prices. There are several variables present in the dataset, including:
+
+- Manufacturer: the car manufacturer (e.g. Toyota, Ford, Honda, etc.) 
+
+- Model: the specific car model (e.g. Corolla, Mustang, Accord, etc.) 
+
+- Location: The place of the car (e.g. Mumbai, Pune, Jaipur, etc.) 
+
+- Year: the year the car was released (e.g. 2010, 2014, 2015, etc.) 
+
+- Engine: the number of cylinders in the engine 
+
+- Fuel_type : the type of fuel the car uses (e.g. gas, diesel, electric) 
+
+- Kilometer_Driven: the total distance the car has traveled 
+
+- Transmission: the type of transmission (e.g. automatic, manual) 
+
+Using this data, we can develop a model to predict the sale price of a used car based on these variables.
+
+# Exploratory Data Analysis
+```{r}
+ggplot(used_cars, aes(x = Price)) +
+  geom_histogram(bins = 30, fill = "blue", alpha = 0.7) +
+  labs(title = "Distribution of Car Prices", x = "Price", y = "Frequency")
+```
+In our exploratory of the data, we observe that the price range of most used cars is around $10,000 USD.
+
+# Statistical Methods
+
+## Regression 
+Our statistical approach would be to create a linear regression model 
+
+
+
+
+
+
+
+
+```{r}
+library(ggplot2)
+library(caret)  # For cross-validation
+library(dplyr)
+
+used_cars_data <- read.csv("used_cars_data.csv")
+
+# Explore the data
+str(used_cars_data)
+summary(used_cars_data)
+
+# Preprocess the dataset (e.g., handling missing values and normalizing)
+# Impute missing values using median for numeric variables
+used_cars_data <- used_cars_data %>%
+  mutate(across(where(is.numeric), ~ ifelse(is.na(.), median(., na.rm = TRUE), .)))
+
+# Convert categorical variables to factors
+used_cars_data$Power <- as.factor(used_cars_data$Power)
+used_cars_data$Year <- as.factor(used_cars_data$Year)
+used_cars_data$Mileage<- as.factor(used_cars_data$Mileage)
+used_cars_data$Fuel_Type <- as.factor(used_cars_data$Fuel_Type)
+used_cars_data$Transmission <- as.factor(used_cars_data$Transmission)
+
+
+
+# Simple Linear Regression Model: Predict Price
+model <- lm(Price ~ Year + Kilometers_Driven + Engine + Fuel_Type + Power + Mileage, data = used_cars_data)
+
+# Summarize the model
+summary(model)
+
+
+
+
+# Cross-Validation using caret
+set.seed(123)
+train_control <- trainControl(method = "cv", number = 10)
+cv_model <- train(Price ~ Year + Kilometers_Driven + Engine + Fuel_Type, 
+                  data = used_cars_data, 
+                  method = "lm",
+                  trControl = train_control)
+
+# Summarize cross-validation results
+print(cv_model)
+
+# Graph: Actual vs. Predicted Prices
+predicted_prices <- predict(model, used_cars_data)
+
+ggplot(used_cars_data, aes(x = Price, y = predicted_prices)) +
+  geom_point(color = "blue") +
+  geom_abline(slope = 1, intercept = 0, color = "red", linetype = "dashed") +
+  ggtitle("Actual vs Predicted Prices") +
+  xlab("Actual Price") +
+  ylab("Predicted Price") +
+  theme_minimal()
+
+# Plot residuals to check the model's fit
+ggplot(used_cars_data, aes(x = predicted_prices, y = residuals(model))) +
+  geom_point(color = "purple") +
+  geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
+  ggtitle("Residuals Plot") +
+  xlab("Predicted Prices") +
+  ylab("Residuals") +
+  theme_minimal()
+
+```
+
+What are the two statistical techniques you plan to use to answer your 
+regression question? Give details here. Name variables, 
+write out models (using $\beta_i$'s), let me know if you're using CV,
+backward selection, etc. Write formulas. Explain why you chose
+to use these two techniques. 
+
+Make a histogram of your Y variable and describe it. Make a 
+scatterplot of Y and an X that might be important and describe
+that relationship. Give me a feel for your data.  
+
+Make a summary stats table of your response variable (n, average, min, 
+Q1, Q2, Q3, and max). See Table \ref{tbl:sumStats} for an example. 
+
+
+# Results
+
+## Regression 
+
+Write estimated final models. Give details. Interpret 
+models and/or coefficients. What do your models say? Do the two 
+models send the same message? What are the important inputs? 
+
+Make plots of your models if possible. 
+
+
+
+
+```{r,  fig.cap="\\label{fig:q1b} The relationship between sepal and petal lenghts", fig.width = 6, fig.height = 5}
+plot(iris$Sepal.Length, iris$Petal.Length, 
+     xlim = c(4, 8), las = 1, ylim = c(1, 7),
+     xlab = "Sepal length (cm)", ylab = "Petal length (cm)",
+     cex.lab = 1.1, cex.axis = 1.1)
+```
+
+
+```{r}
+summaryStatIris <- iris %>% 
+  group_by(Species) %>%
+  summarise(n = n(), 
+            avg = round(mean(Sepal.Length), 2), 
+            sd = round(sd(Sepal.Length), 2), 
+            lcb = round(avg - qt(0.975, n - 1)*sd/sqrt(n), 2), 
+            ucb = round(avg + qt(0.975, n - 1)*sd/sqrt(n), 2))
+
+
+kable(summaryStatIris, 
+      col.names = c("Species", "n", "Average", "Std. deviation", 
+                    "95% CI lower bound", "95% CI upper bound"), 
+      caption = "\\label{tbl:sumStats} The summary statistics for the sepal length by species")
+```
+
+# Conclusions
+
+What did you learn? What else would you have wanted to know but couldn't?
+Is something looking weird / surprising / unexpected?
+
+Don't use formulas here or be too statistical. This section is for the 
+wider audience. 
+
+# Appendix A
+
+If you need it. 
