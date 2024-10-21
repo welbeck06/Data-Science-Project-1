@@ -113,12 +113,10 @@ ggplot(cor_melted, aes(Var1, Var2, fill = value)) +
 What are the two statistical techniques you plan to use to answer your 
 regression question? 
 
-We plan to use multiple linear regression. This technique will help us model the relationship between the dependent variable which in this case is price and multiple independent variables (Power, Engine, Kilometers_Driven, Years_Used, etc).  
+We plan to use multiple linear regression. This technique will help us model the relationship between the dependent variable which in this case is price and multiple independent variables (Power, Engine, Kilometers_Driven, Years_Used, etc). 
 
-Give details here. Name variables, 
-write out models (using $\beta_i$'s), let me know if you're using CV,
-backward selection, etc. Write formulas. Explain why you chose
-to use these two techniques. 
+The multiple linear regression model could be expressed in the below equation:
+$Y = β_0+β_1*X_1+β_2*X_2...β_n*X_n+\epsilon$ 
 
 Explain Regression(Jordan)
 Regression is a statistical method used to understand the relationship between different variables.The goal of regression is to understand how the dependent variable changes when the independent variables are varied. This helps in predicting future values of the dependent variable. Our statistical approach will be to create a linear regression model
