@@ -1,0 +1,65 @@
+```{r}
+install.packages("ggplot2")
+install.packages("reshape2")
+install.packages("dplyr")
+
+```
+
+```{r}
+# Load required libraries
+library(ggplot2)
+library(reshape2)
+library(dplyr)
+
+# Load the dataset
+data <- read.csv("/Users/crabby/Desktop/Project-1/used_cars_data.csv")
+
+```
+
+```{r}
+# Clean the dataset by extracting numeric values from columns like Mileage, Engine, Power
+data$Mileage <- as.numeric(gsub("[^0-9.]", "", data$Mileage))
+data$Engine <- as.numeric(gsub("[^0-9.]", "", data$Engine))
+data$Power <- as.numeric(gsub("[^0-9.]", "", data$Power))
+
+# Select only numeric columns
+numeric_columns <- data %>%
+  select(Year, Kilometers_Driven, Mileage, Engine, Power, Seats, Price)
+
+# Remove rows with missing values
+numeric_data <- na.omit(numeric_columns)
+
+```
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(reshape2)
+
+# Assuming the data is already loaded and cleaned, and that you've calculated 'Years_Used'
+data$Years_Used <- 2024 - data$Year
+
+# Filter the data to include only the selected columns
+selected_data <- data[, c("Price", "Power", "Engine", "Kilometers_Driven", "Years_Used")]
+
+# Remove rows with missing values
+selected_data <- na.omit(selected_data)
+
+# Create a correlation matrix
+cor_matrix <- cor(selected_data, use = "complete.obs")
+
+# Melt the correlation matrix for ggplot
+cor_melted <- melt(cor_matrix)
+
+# Plot the heatmap with a blue-white-green color gradient and scale set from -1 to 1
+ggplot(cor_melted, aes(Var1, Var2, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "burlywood4", midpoint = 0, limits = c(-1, 1)) +
+  theme_minimal() +
+  labs(title = "Correlation Heatmap for Selected Variables", x = "Variables", y = "Variables") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+
+
