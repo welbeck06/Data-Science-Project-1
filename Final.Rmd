@@ -129,58 +129,43 @@ Regression is a statistical method used to understand the relationship between d
 ## Regression 
 
 ```{r}
-# Load necessary libraries
 library(dplyr)
 library(ggplot2)
 
-# Load the dataset
 used_cars_data <- read.csv("used_cars_data.csv")
 
-# Clean the data: Remove units from Mileage, Engine, and Power, and convert to numeric
 used_cars_data$Mileage <- as.numeric(gsub(" km/kg| kmpl", "", used_cars_data$Mileage))
 used_cars_data$Engine <- as.numeric(gsub(" CC", "", used_cars_data$Engine))
 used_cars_data$Power <- as.numeric(gsub(" bhp", "", used_cars_data$Power))
 
-# Handle missing values by imputing with the median for numerical columns
+
 used_cars_data <- used_cars_data %>%
   mutate(across(where(is.numeric), ~ ifelse(is.na(.), median(., na.rm = TRUE), .)))
 
-# Convert categorical variables to factors
 used_cars_data$Fuel_Type <- as.factor(used_cars_data$Fuel_Type)
 used_cars_data$Transmission <- as.factor(used_cars_data$Transmission)
+used_cars_data$Location <- as.factor(used_cars_data$Location)
 
-# Convert Year to factor and set its levels to include all possible years
 used_cars_data$Year <- factor(used_cars_data$Year)
 
-# Ensure that the levels of Year are consistent across training and prediction
-# Set levels explicitly to include all unique years in the dataset
 unique_years <- sort(unique(used_cars_data$Year))
 used_cars_data$Year <- factor(used_cars_data$Year, levels = unique_years)
 
-# Build the linear regression model
-model <- lm(Price ~ Year + Kilometers_Driven + Engine + Fuel_Type + Power + Mileage + Transmission, data = used_cars_data)
-
-# Summarize the model
+model <- lm(Price ~  Kilometers_Driven  + Fuel_Type +  Mileage + Transmission + Power, data = used_cars_data)
 summary(model)
 
-# Predict prices using the model
 predicted_prices <- predict(model, used_cars_data)
-
-# Add the predicted prices to the original dataset
 used_cars_data$Predicted_Price <- predicted_prices
-
-# View the first few rows with predicted prices
 head(used_cars_data)
 
 ```
-
-
 
 Write estimated final models. Give details. Interpret 
 models and/or coefficients. What do your models say? Do the two 
 models send the same message? What are the important inputs? 
 
-
+## Final Estimated Model
+$Price = -3.636e+00 - 3.666e-06 * Kilometers_Driven + 3.079e-01 * Fuel_TypeDiesel + 7.613e+00 * Fuel_TypeElectric + 4.350e-01 * Fuel_TypeLPG - 1.595e+00 * Fuel_TypePetrol + 1.258e-01 * Mileage - 3.360e+00 * TransmissionManual + 1.191e-01 * Power + \epsilon$ 
 
 
 Make plots of your models if possible. 
