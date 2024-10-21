@@ -23,7 +23,7 @@ header-includes:
 knitr::opts_chunk$set(fig.width = 10, fig.height = 5, echo = TRUE, eval = TRUE)
 library(knitr)
 library(tidyverse)
-used_cars <- read.csv("/Users/crabby/Desktop/Project-1/used_cars_data.csv") #redirect
+used_cars <- read.csv("used_cars_data.csv") #redirect
 ```
 
 # Introduction
@@ -65,32 +65,25 @@ ggplot(used_cars, aes(x = Price)) +
   geom_histogram(bins = 30, fill = "blue", alpha = 0.7) +
   labs(title = "Distribution of Car Prices", x = "Price", y = "Frequency")
 ```
+In our exploratory of the data, we observe that the price range of most used cars is around $10,000 USD.
 
 
-```{r}
-# Load required libraries
-library(ggplot2)
-library(reshape2)
-library(dplyr)
-```
 ```{r}
 # Load necessary libraries
 library(ggplot2)
 library(reshape2)
-
-# Load your data into a dataframe (rename 'data' to avoid conflicts)
-df <- read.csv("/Users/crabby/Desktop/Project-1/used_cars_data.csv") #redirect
+library(dplyr)
 
 # Assuming the 'Mileage' column needs cleaning
-df$Mileage <- as.numeric(gsub("[^0-9.]", "", df$Mileage))
-df$Engine <- as.numeric(gsub("[^0-9.]", "", df$Engine))
-df$Power <- as.numeric(gsub("[^0-9.]", "", df$Power))
+used_cars$Mileage <- as.numeric(gsub("[^0-9.]", "", used_cars$Mileage))
+used_cars$Engine <- as.numeric(gsub("[^0-9.]", "", used_cars$Engine))
+used_cars$Power <- as.numeric(gsub("[^0-9.]", "", used_cars$Power))
 
 # Calculate 'Years_Used'
-df$Years_Used <- 2024 - df$Year
+used_cars$Years_Used <- 2024 - used_cars$Year
 
 # Filter the data to include only the selected columns
-selected_data <- df[, c("Price", "Power", "Engine", "Kilometers_Driven", "Years_Used")]
+selected_data <- used_cars[, c("Price", "Power", "Engine", "Kilometers_Driven", "Years_Used")]
 
 # Remove rows with missing values
 selected_data <- na.omit(selected_data)
@@ -104,118 +97,18 @@ cor_melted <- melt(cor_matrix)
 # Plot the heatmap with a blue-white-green color gradient and scale set from -1 to 1
 ggplot(cor_melted, aes(Var1, Var2, fill = value)) +
   geom_tile() +
-  scale_fill_gradient2(low = "blue", mid = "white", high = "burlywood4", midpoint = 0, limits = c(-1, 1)) +
+  scale_fill_gradient2(low = "brown", mid = "white", high = "darkblue", midpoint = 0, limits = c(-1, 1)) +
   theme_minimal() +
-  labs(title = "Correlation Heatmap for Selected Variables", x = "Variables", y = "Variables") +
+  labs(title = "Correlation Heatmap for Selected Variables", x = "", y = "") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 ```
-```{r}
-# Load required libraries
-library(ggplot2)
-library(reshape2)
-library(dplyr)
 
-# Load the dataset
-data <- read.csv("/Users/crabby/Desktop/Project-1/used_cars_data.csv") #redirect
 
-```
-
-```{r}
-# Clean the dataset by extracting numeric values from columns like Mileage, Engine, Power
-data$Mileage <- as.numeric(gsub("[^0-9.]", "", data$Mileage))
-data$Engine <- as.numeric(gsub("[^0-9.]", "", data$Engine))
-data$Power <- as.numeric(gsub("[^0-9.]", "", data$Power))
-
-# Select only numeric columns
-numeric_columns <- data %>%
-  select(Year, Kilometers_Driven, Mileage, Engine, Power, Seats, Price)
-
-# Remove rows with missing values
-numeric_data <- na.omit(numeric_columns)
-
-```
-
-In our exploratory of the data, we observe that the price range of most used cars is around $10,000 USD.
 
 # Statistical Methods
 
 ## Regression 
-Our statistical approach would be to create a linear regression model 
-
-
-
-
-
-
-
-
-```{r}
-library(ggplot2)
-library(caret)  # For cross-validation
-library(dplyr)
-
-used_cars_data <- read.csv("/Users/crabby/Desktop/Project-1/used_cars_data.csv") #redirect
-
-# Explore the data
-str(used_cars_data)
-summary(used_cars_data)
-
-# Preprocess the dataset (e.g., handling missing values and normalizing)
-# Impute missing values using median for numeric variables
-used_cars_data <- used_cars_data %>%
-  mutate(across(where(is.numeric), ~ ifelse(is.na(.), median(., na.rm = TRUE), .)))
-
-# Convert categorical variables to factors
-used_cars_data$Power <- as.factor(used_cars_data$Power)
-used_cars_data$Year <- as.factor(used_cars_data$Year)
-used_cars_data$Mileage<- as.factor(used_cars_data$Mileage)
-used_cars_data$Fuel_Type <- as.factor(used_cars_data$Fuel_Type)
-used_cars_data$Transmission <- as.factor(used_cars_data$Transmission)
-
-
-
-# Simple Linear Regression Model: Predict Price
-model <- lm(Price ~ Year + Kilometers_Driven + Engine + Fuel_Type + Power + Mileage, data = used_cars_data)
-
-# Summarize the model
-summary(model)
-
-
-
-
-# Cross-Validation using caret
-set.seed(123)
-train_control <- trainControl(method = "cv", number = 10)
-cv_model <- train(Price ~ Year + Kilometers_Driven + Engine + Fuel_Type, 
-                  data = used_cars_data, 
-                  method = "lm",
-                  trControl = train_control)
-
-# Summarize cross-validation results
-print(cv_model)
-
-# Graph: Actual vs. Predicted Prices
-predicted_prices <- predict(model, used_cars_data)
-
-ggplot(used_cars_data, aes(x = Price, y = predicted_prices)) +
-  geom_point(color = "blue") +
-  geom_abline(slope = 1, intercept = 0, color = "red", linetype = "dashed") +
-  ggtitle("Actual vs Predicted Prices") +
-  xlab("Actual Price") +
-  ylab("Predicted Price") +
-  theme_minimal()
-
-# Plot residuals to check the model's fit
-ggplot(used_cars_data, aes(x = predicted_prices, y = residuals(model))) +
-  geom_point(color = "purple") +
-  geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
-  ggtitle("Residuals Plot") +
-  xlab("Predicted Prices") +
-  ylab("Residuals") +
-  theme_minimal()
-
-```
 
 What are the two statistical techniques you plan to use to answer your 
 regression question? Give details here. Name variables, 
@@ -223,21 +116,72 @@ write out models (using $\beta_i$'s), let me know if you're using CV,
 backward selection, etc. Write formulas. Explain why you chose
 to use these two techniques. 
 
-Make a histogram of your Y variable and describe it. Make a 
-scatterplot of Y and an X that might be important and describe
-that relationship. Give me a feel for your data.  
+Explain Regression(Jordan)
+Our statistical approach would be to create a linear regression model 
 
-Make a summary stats table of your response variable (n, average, min, 
-Q1, Q2, Q3, and max). See Table \ref{tbl:sumStats} for an example. 
+
+
+
 
 
 # Results
 
 ## Regression 
 
+```{r}
+# Load necessary libraries
+library(dplyr)
+library(ggplot2)
+
+# Load the dataset
+used_cars_data <- read.csv("used_cars_data.csv")
+
+# Clean the data: Remove units from Mileage, Engine, and Power, and convert to numeric
+used_cars_data$Mileage <- as.numeric(gsub(" km/kg| kmpl", "", used_cars_data$Mileage))
+used_cars_data$Engine <- as.numeric(gsub(" CC", "", used_cars_data$Engine))
+used_cars_data$Power <- as.numeric(gsub(" bhp", "", used_cars_data$Power))
+
+# Handle missing values by imputing with the median for numerical columns
+used_cars_data <- used_cars_data %>%
+  mutate(across(where(is.numeric), ~ ifelse(is.na(.), median(., na.rm = TRUE), .)))
+
+# Convert categorical variables to factors
+used_cars_data$Fuel_Type <- as.factor(used_cars_data$Fuel_Type)
+used_cars_data$Transmission <- as.factor(used_cars_data$Transmission)
+
+# Convert Year to factor and set its levels to include all possible years
+used_cars_data$Year <- factor(used_cars_data$Year)
+
+# Ensure that the levels of Year are consistent across training and prediction
+# Set levels explicitly to include all unique years in the dataset
+unique_years <- sort(unique(used_cars_data$Year))
+used_cars_data$Year <- factor(used_cars_data$Year, levels = unique_years)
+
+# Build the linear regression model
+model <- lm(Price ~ Year + Kilometers_Driven + Engine + Fuel_Type + Power + Mileage + Transmission, data = used_cars_data)
+
+# Summarize the model
+summary(model)
+
+# Predict prices using the model
+predicted_prices <- predict(model, used_cars_data)
+
+# Add the predicted prices to the original dataset
+used_cars_data$Predicted_Price <- predicted_prices
+
+# View the first few rows with predicted prices
+head(used_cars_data)
+
+```
+
+
+
 Write estimated final models. Give details. Interpret 
 models and/or coefficients. What do your models say? Do the two 
 models send the same message? What are the important inputs? 
+
+
+
 
 Make plots of your models if possible. 
 
@@ -245,28 +189,17 @@ Make plots of your models if possible.
 
 
 ```{r,  fig.cap="\\label{fig:q1b} The relationship between sepal and petal lenghts", fig.width = 6, fig.height = 5}
-plot(iris$Sepal.Length, iris$Petal.Length, 
-     xlim = c(4, 8), las = 1, ylim = c(1, 7),
-     xlab = "Sepal length (cm)", ylab = "Petal length (cm)",
-     cex.lab = 1.1, cex.axis = 1.1)
+ggplot(used_cars_data, aes(x = Price, y = predicted_prices)) +
+  geom_point(color = "blue") +
+  geom_abline(slope = 1, intercept = 0, color = "red", linetype = "dashed") +
+  ggtitle("Actual vs Predicted Prices") +
+  xlab("Actual Price") +
+  ylab("Predicted Price") +
+  theme_minimal()
 ```
 
 
-```{r}
-summaryStatIris <- iris %>% 
-  group_by(Species) %>%
-  summarise(n = n(), 
-            avg = round(mean(Sepal.Length), 2), 
-            sd = round(sd(Sepal.Length), 2), 
-            lcb = round(avg - qt(0.975, n - 1)*sd/sqrt(n), 2), 
-            ucb = round(avg + qt(0.975, n - 1)*sd/sqrt(n), 2))
 
-
-kable(summaryStatIris, 
-      col.names = c("Species", "n", "Average", "Std. deviation", 
-                    "95% CI lower bound", "95% CI upper bound"), 
-      caption = "\\label{tbl:sumStats} The summary statistics for the sepal length by species")
-```
 
 # Conclusions
 
