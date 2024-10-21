@@ -12,7 +12,7 @@ library(reshape2)
 library(dplyr)
 
 # Load the dataset
-data <- read.csv("/Users/crabby/Desktop/Project-1/used_cars_data.csv")
+data <- read.csv("used_cars_data.csv")
 
 ```
 
