@@ -23,7 +23,7 @@ header-includes:
 knitr::opts_chunk$set(fig.width = 10, fig.height = 5, echo = TRUE, eval = TRUE)
 library(knitr)
 library(tidyverse)
-used_cars <- read.csv("/Users/crabby/Desktop/Project-1/used_cars_data.csv")
+used_cars <- read.csv("/Users/crabby/Desktop/Project-1/used_cars_data.csv") #redirect
 ```
 
 # Introduction
@@ -79,7 +79,7 @@ library(ggplot2)
 library(reshape2)
 
 # Load your data into a dataframe (rename 'data' to avoid conflicts)
-df <- read.csv("/Users/crabby/Desktop/Project-1/used_cars_data.csv")
+df <- read.csv("/Users/crabby/Desktop/Project-1/used_cars_data.csv") #redirect
 
 # Assuming the 'Mileage' column needs cleaning
 df$Mileage <- as.numeric(gsub("[^0-9.]", "", df$Mileage))
@@ -117,7 +117,7 @@ library(reshape2)
 library(dplyr)
 
 # Load the dataset
-data <- read.csv("/Users/crabby/Desktop/Project-1/used_cars_data.csv")
+data <- read.csv("/Users/crabby/Desktop/Project-1/used_cars_data.csv") #redirect
 
 ```
 
@@ -155,7 +155,7 @@ library(ggplot2)
 library(caret)  # For cross-validation
 library(dplyr)
 
-used_cars_data <- read.csv("/Users/crabby/Desktop/Project-1/used_cars_data.csv")
+used_cars_data <- read.csv("/Users/crabby/Desktop/Project-1/used_cars_data.csv") #redirect
 
 # Explore the data
 str(used_cars_data)
