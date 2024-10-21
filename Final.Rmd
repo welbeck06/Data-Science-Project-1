@@ -206,7 +206,7 @@ Is something looking weird / surprising / unexpected?
 Don't use formulas here or be too statistical. This section is for the 
 wider audience. 
 
-Everybody should write three to four sentences.
+Everybody should write three to four sentences by tomorrow 9PM.
 
 
 # Appendix A
