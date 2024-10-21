@@ -65,6 +65,41 @@ ggplot(used_cars, aes(x = Price)) +
   geom_histogram(bins = 30, fill = "blue", alpha = 0.7) +
   labs(title = "Distribution of Car Prices", x = "Price", y = "Frequency")
 ```
+
+
+```{r}
+install.packages("ggplot2")
+install.packages("reshape2")
+install.packages("dplyr")
+
+```
+
+```{r}
+# Load required libraries
+library(ggplot2)
+library(reshape2)
+library(dplyr)
+
+# Load the dataset
+data <- read.csv("used_cars_data.csv")
+
+```
+
+```{r}
+# Clean the dataset by extracting numeric values from columns like Mileage, Engine, Power
+data$Mileage <- as.numeric(gsub("[^0-9.]", "", data$Mileage))
+data$Engine <- as.numeric(gsub("[^0-9.]", "", data$Engine))
+data$Power <- as.numeric(gsub("[^0-9.]", "", data$Power))
+
+# Select only numeric columns
+numeric_columns <- data %>%
+  select(Year, Kilometers_Driven, Mileage, Engine, Power, Seats, Price)
+
+# Remove rows with missing values
+numeric_data <- na.omit(numeric_columns)
+
+```
+
 In our exploratory of the data, we observe that the price range of most used cars is around $10,000 USD.
 
 # Statistical Methods
