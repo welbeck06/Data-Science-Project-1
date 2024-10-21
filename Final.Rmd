@@ -111,7 +111,11 @@ ggplot(cor_melted, aes(Var1, Var2, fill = value)) +
 ## Regression 
 
 What are the two statistical techniques you plan to use to answer your 
-regression question? Give details here. Name variables, 
+regression question? 
+
+We plan to use multiple linear regression. This technique will help us model the relationship between the dependent variable which in this case is price and multiple independent variables (Power, Engine, Kilometers_Driven, Years_Used, etc).  
+
+Give details here. Name variables, 
 write out models (using $\beta_i$'s), let me know if you're using CV,
 backward selection, etc. Write formulas. Explain why you chose
 to use these two techniques. 
