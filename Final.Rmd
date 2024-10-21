@@ -117,7 +117,7 @@ backward selection, etc. Write formulas. Explain why you chose
 to use these two techniques. 
 
 Explain Regression(Jordan)
-Our statistical approach would be to create a linear regression model 
+Regression is a statistical method used to understand the relationship between different variables.The goal of regression is to understand how the dependent variable changes when the independent variables are varied. This helps in predicting future values of the dependent variable. Our statistical approach will be to create a linear regression model
 
 
 
