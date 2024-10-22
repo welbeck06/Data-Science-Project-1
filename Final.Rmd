@@ -105,7 +105,7 @@ ggplot(cor_melted, aes(Var1, Var2, fill = value)) +
 ```
 
 Jordan :Need explain the correlation graph
-
+The correlation heatmap highlights the relationships between different factors and vehicle price, providing insights into what affects pricing the most. Engine size and power show strong positive correlations with price, meaning cars with bigger engines and more horsepower tend to have higher prices. This is expected, as vehicles with better performance often come at a premium price. On the other hand, kilometers driven has a clear negative correlation with price—indicating that cars with more kilometers on the odometer tend to sell for less. This shows the wear and tear that comes with higher mileage. Years used has a weak correlation with price. This suggests that a car's age alone doesn’t have a significant effect on its value. It seems that other factors, like mileage and condition, are more influential when determining a car's price. Overall, the graph shows that engine performance and usage are the main drivers of vehicle price, while age plays a much smaller role
 # Statistical Methods
 
 ## Regression 
