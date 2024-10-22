@@ -117,10 +117,7 @@ backward selection, etc. Write formulas. Explain why you chose
 to use these two techniques. 
 
 Explain Regression(Jordan)
-Regression is a statistical method used to understand the relationship between one dependent variable and one or more independent variables. This model helps us to quantify how a change in the independent variables are linked with changes in the dependent variable, making this model a tool to help us make predictions and analysis. 
-
-
-
+Regression is a statistical method used to understand the relationship between one dependent variable and one or more independent variables. This model helps us to quantify how a change in the independent variables are linked with changes in the dependent variable, making this model a tool to help us make predictions and analysis. For example in our project, the dependent variable is the price while the independent variables are (Kilometers_Driven, Fuel_Type, Mileage, Transmission, Power, etc.). So we are using the multi linear regression model to see how each independent variable effects the price of used cars.  
 
 
 
