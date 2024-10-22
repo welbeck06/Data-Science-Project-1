@@ -1,4 +1,4 @@
----
+e---
 title: 'Statistical Analysis of Used Cars Data'
 author: Welbeck Achiampong, Muhyadin Yusuf,  Minh Pham, and Jordan Addo
 date: \today
@@ -117,7 +117,8 @@ backward selection, etc. Write formulas. Explain why you chose
 to use these two techniques. 
 
 Explain Regression(Jordan)
-Regression is a statistical method used to understand the relationship between different variables.The goal of regression is to understand how the dependent variable changes when the independent variables are varied. This helps in predicting future values of the dependent variable. Our statistical approach will be to create a linear regression model
+Regression is a statistical method used to understand the relationship between one dependent variable and one or more independent variables. This model helps us to quantify how a change in the independent variables are linked with changes in the dependent variable, making this model a tool to help us make predictions and analysis. 
+
 
 
 
