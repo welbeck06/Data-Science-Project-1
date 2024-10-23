@@ -108,17 +108,22 @@ Jordan :Need explain the correlation graph
 The correlation heatmap highlights the relationships between different factors and vehicle price, providing insights into what affects pricing the most. Engine size and power show strong positive correlations with price, meaning cars with bigger engines and more horsepower tend to have higher prices. This is expected, as vehicles with better performance often come at a premium price. On the other hand, kilometers driven has a clear negative correlation with price—indicating that cars with more kilometers on the odometer tend to sell for less. This shows the wear and tear that comes with higher mileage. Years used has a weak correlation with price. This suggests that a car's age alone doesn’t have a significant effect on its value. It seems that other factors, like mileage and condition, are more influential when determining a car's price. Overall, the graph shows that engine performance and usage are the main drivers of vehicle price, while age plays a much smaller role
 # Statistical Methods
 
-## Regression 
-
-What are the two statistical techniques you plan to use to answer your 
-regression question? Give details here. Name variables, 
-write out models (using $\beta_i$'s), let me know if you're using CV,
-backward selection, etc. Write formulas. Explain why you chose
-to use these two techniques. 
+## Regression  
 
 Explain Regression(Jordan)
 Regression is a statistical method used to understand the relationship between one dependent variable and one or more independent variables. This model helps us to quantify how a change in the independent variables are linked with changes in the dependent variable, making this model a tool to help us make predictions and analysis. For example in our project, the dependent variable is the price while the independent variables are (Kilometers_Driven, Fuel_Type, Mileage, Transmission, Power, etc.). So we are using the multi linear regression model to see how each independent variable effects the price of used cars.  
 
+The statistical technique we plan to use is a multi linear regression model to answer our regression question. 
+The model could be expressed as:
+
+$Y= β_0 + β_1*X_1 + β_2*X_2... β_n*X_n + /episolon/
+
+
+What is th the statistical technique you plan to use to answer your 
+regression question? Give details here. Name variables, 
+write out models (using $\beta_i$'s), let me know if you're using CV,
+backward selection, etc. Write formulas. Explain why you chose
+to use these two techniques.
 
 
 
