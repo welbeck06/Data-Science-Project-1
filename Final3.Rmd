@@ -1,0 +1,246 @@
+---
+title: "Statistical Analysis of Used Cars Data"
+author: "Welbeck Achiampong, Muhyadin Yusuf,  Minh Pham, and Jordan Addo"
+date: "\today"
+output:
+  word_document:
+    toc: true
+    toc_depth: '3'
+  pdf_document:
+    number_sections: true
+    toc: true
+    toc_depth: 3
+geometry: margin=0.85in
+fontsize: 12pt
+header-includes: \usepackage{setspace}\onehalfspacing
+---
+
+\listoffigures
+\listoftables
+
+\newpage
+
+```{r, message = FALSE, warning = FALSE}
+# set your global options here and load your packages
+knitr::opts_chunk$set(fig.width = 10, fig.height = 5, echo = TRUE, eval = TRUE)
+library(knitr)
+library(tidyverse)
+used_cars <- read.csv("used_cars_data.csv") #redirect
+```
+
+# Introduction
+
+This project aims to explore the used car market by analyzing the factors that influence the pricing of used cars. With the increasing demand for used vehicles, understanding how various features like the manufacturer, model, year, engine type, and kilometers driven impact the price can help consumers and dealers alike make informed decisions. The dataset, `used_cars_data.csv`, contains information on these attributes, offering insights into how different features contribute to the sale price of a car. By developing a predictive model, we can provide a more accurate estimate of a used car's value based on its characteristics, making this research valuable for both buyers and sellers in the used car market.
+
+To address this, we will build a linear regression model to estimate the price based on these features. The model will follow the general equation $Y = B_0 + B_1 x_1 + B_2 x_2$ where $Y$ is the response variable(pricted price) and the $B's$ represents the coefficients and the $x's$ are the input variables. Through pre-processing the data and ensuring it is clean and normalized yo be able to accurately predict the price of used cars.
+
+## Reserach questions
+
+Our research question is to determine whether a model can effectively predict the price of a used car using variables such as the year of the car, kilometers driven, engine capacity, and fuel type.
+
+
+## Data set desription
+
+The dataset, used_cars_data.csv, contains information about used cars and their sale prices. There are several variables present in the dataset, including:
+
+- Manufacturer: the car manufacturer (e.g. Toyota, Ford, Honda, etc.) 
+
+- Model: the specific car model (e.g. Corolla, Mustang, Accord, etc.) 
+
+- Location: The place of the car (e.g. Mumbai, Pune, Jaipur, etc.) 
+
+- Year: the year the car was released (e.g. 2010, 2014, 2015, etc.) 
+
+- Engine: the number of cylinders in the engine 
+
+- Fuel_type : the type of fuel the car uses (e.g. gas, diesel, electric) 
+
+- Kilometer_Driven: the total distance the car has traveled 
+
+- Transmission: the type of transmission (e.g. automatic, manual) 
+
+Using this data, we can develop a model to predict the sale price of a used car based on these variables.
+
+# Exploratory Data Analysis
+```{r}
+ggplot(used_cars, aes(x = Price)) +
+  geom_histogram(bins = 30, fill = "blue", alpha = 0.7) +
+  labs(title = "Distribution of Car Prices", x = "Price", y = "Frequency")
+```
+In our exploratory of the data, we observe that the price range of most used cars is around $10,000 USD.
+
+```{r}
+levels(used_cars$Fuel_Type)
+```
+
+
+```{r}
+ggplot(used_cars, aes(x = Fuel_Type, y = Price, fill = Fuel_Type)) +
+  geom_boxplot() +
+  labs(title = "Fuel Type vs Price", x = "Fuel Type", y = "Price")
+```
+Need explanation:
+
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(reshape2)
+library(dplyr)
+
+# Assuming the 'Mileage' column needs cleaning
+used_cars$Mileage <- as.numeric(gsub("[^0-9.]", "", used_cars$Mileage))
+used_cars$Engine <- as.numeric(gsub("[^0-9.]", "", used_cars$Engine))
+used_cars$Power <- as.numeric(gsub("[^0-9.]", "", used_cars$Power))
+
+# Calculate 'Years_Used'
+used_cars$Years_Used <- 2024 - used_cars$Year
+
+selected_data <- used_cars[, c("Price", "Power", "Engine", "Kilometers_Driven", "Years_Used")]
+
+
+selected_data <- na.omit(selected_data)
+
+cor_matrix <- cor(selected_data, use = "complete.obs")
+
+cor_melted <- melt(cor_matrix)
+
+ggplot(cor_melted, aes(Var1, Var2, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "brown", mid = "white", high = "darkblue", midpoint = 0, limits = c(-1, 1)) +
+  theme_minimal() +
+  labs(title = "Correlation Heatmap for Selected Variables", x = "", y = "") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+Jordan :Need explain the correlation graph
+The correlation heatmap highlights the relationships between different factors and vehicle price, providing insights into what affects pricing the most. Engine size and power show strong positive correlations with price, meaning cars with bigger engines and more horsepower tend to have higher prices. This is expected, as vehicles with better performance often come at a premium price. On the other hand, kilometers driven has a clear negative correlation with price—indicating that cars with more kilometers on the odometer tend to sell for less. This shows the wear and tear that comes with higher mileage. Years used has a weak correlation with price. This suggests that a car's age alone doesn’t have a significant effect on its value. It seems that other factors, like mileage and condition, are more influential when determining a car's price. Overall, the graph shows that engine performance and usage are the main drivers of vehicle price, while age plays a much smaller role.
+
+# Statistical Methods
+
+## Regression 
+
+What are the two statistical techniques you plan to use to answer your 
+regression question? Give details here. Name variables, 
+write out models (using $\beta_i$'s), let me know if you're using CV,
+backward selection, etc. Write formulas. Explain why you chose
+to use these two techniques. 
+
+Explain Regression(Jordan)
+Regression is a statistical method used to understand the relationship between one dependent variable and one or more independent variables. This model helps us to quantify how a change in the independent variables are linked with changes in the dependent variable, making this model a tool to help us make predictions and analysis. For example in our project, the dependent variable is the price while the independent variables are (Kilometers_Driven, Fuel_Type, Mileage, Transmission, Power, etc.). So we are using the multi linear regression model to see how each independent variable effects the price of used cars.  
+
+The statistical technique we plan to use is a multi linear regression model to answer our regression question. 
+The model could be expressed as:
+
+$Y= β_0 + β_1*X_1 + β_2*X_2... β_n*X_n + /episolon/
+
+
+
+
+
+# Results
+
+## Regression 
+
+```{r}
+library(dplyr)
+library(ggplot2)
+
+#used_cars <- read.csv("used_cars_data.csv")
+
+used_cars$Mileage <- as.numeric(gsub(" km/kg| kmpl", "", used_cars$Mileage))
+used_cars$Engine <- as.numeric(gsub(" CC", "", used_cars$Engine))
+used_cars$Power <- as.numeric(gsub(" bhp", "", used_cars$Power))
+
+
+used_cars <- used_cars %>%
+  mutate(across(where(is.numeric), ~ ifelse(is.na(.), median(., na.rm = TRUE), .)))
+
+used_cars$Fuel_Type <- as.factor(used_cars$Fuel_Type)
+used_cars$Transmission <- as.factor(used_cars$Transmission)
+used_cars$Location <- as.factor(used_cars$Location)
+
+used_cars$Year <- factor(used_cars$Year)
+
+unique_years <- sort(unique(used_cars$Year))
+used_cars$Year <- factor(used_cars$Year, levels = unique_years)
+
+model <- lm(Price ~  Kilometers_Driven  + Fuel_Type +  Mileage + Transmission + Power, data = used_cars)
+summary(model)
+
+predicted_prices <- predict(model, used_cars)
+used_cars$Predicted_Price <- predicted_prices
+head(used_cars)
+
+```
+
+Write estimated final models. Give details. Interpret 
+models and/or coefficients. What do your models say? Do the two 
+models send the same message? What are the important inputs? 
+
+## Final Estimated Model
+$Price = -3.636e+00 - 3.666e-06 * Kilometers_Driven + 3.079e-01 * Fuel_TypeDiesel + 7.613e+00 * Fuel_TypeElectric + 4.350e-01 * Fuel_TypeLPG - 1.595e+00 * Fuel_TypePetrol + 1.258e-01 * Mileage - 3.360e+00 * TransmissionManual + 1.191e-01 * Power + \epsilon$ 
+
+The estimated model for the price of a used car considering the different variables such as Kilometer Driven, Fuel type(Diesel,Electric,LPG,Petrol), Mileage, Transmission and power. The co-efficient in out model tells us the change in our price by one unit. In other words, as the price of a used car increases, the imput variables changes based on their respective co-efficient. 
+
+
+
+## Model Interpertation 
+```{r}
+anova(model)
+levels(used_cars$Fuel_Type)
+```
+From our analysis table, our Sum of squares explains the variation by each variable, Transmission has a large samount of variation with a sum of squares of 128,069 indicating that the variable transmission explains more variation of the price of a used car. Similarly, Power also has slightly large amount of variation with sum of squares of 125,783. Mileage and fuel type also as some significance of variation in explaining of our response variable(Price). Lastly Kilometer driven xplains very little of the variation of the price of used cars.
+
+Each of the mean square of our variable was calculated by dividing our sum of squares by the degree of freedom which helps us understand how much variation each factor explains per degree of freedom.
+
+The F-value is the ratio of the mean square of each variable to the mean square of the residuals. A higher F-value indicates a more significant effect on the price of a used car. As an illustration, the F-value for the variable transmission is 2510.90, suggesting that transmission has a highly significant effect on the price of a used car, similar, Power, Mileage and Fuel type also have some significance effect on the price of used cars. Kilometer driven on the other hand, has a small F-value of 1.84, suggesting there's a small significant effect on price.   
+
+Similar to F-value, the p-value also tells us whether the variable has a statistically sihnificant effect on the price of used cars. A very small p-value which is less than 0.05 indicates that our predicted variable has statistically significant impact on the price. We observe our p-value for kilometer driven to be 0.1746 which is greater than 0.05, suggesting that kilometer driven does not significantly impact the price of used cars. All of the other variables(Fuel type, Mileage, Transmission and Power) have highly statistical significant impact on price because their p - value are less than 0.05.
+
+
+In conclusion, Fuel_Type, Mileage, Transmission, and Power are key drivers of Price. Kilometers_Driven does not significantly affect Price, as indicated by its high p-value (0.1746).
+
+
+Make plots of your models if possible. 
+
+
+```{r,  fig.cap="\\label{fig:q1b} The relationship between Actual and Predicted Prices", fig.width = 6, fig.height = 5}
+ggplot(used_cars, aes(x = Price, y = predicted_prices)) +
+  geom_point(color = "blue") +
+  geom_abline(slope = 1, intercept = 0, color = "red", linetype = "dashed") +
+  ggtitle("Actual vs Predicted Prices") +
+  xlab("Actual Price") +
+  ylab("Predicted Price") +
+  theme_minimal()
+```
+
+
+
+
+# Conclusions
+
+What did you learn? What else would you have wanted to know but couldn't?
+Is something looking weird / surprising / unexpected?
+
+Muhyadin:
+
+In this project, we used the mtcars data to predict used car prices and analyze used car markets focusing on factors that influence car prices such as, manufacturer, model, year, engine type, kilometers driven, etc... By using multi linear regression model, our aim is to predict used car prices based on the characteristics in the data. This model is aimed to provide valuable insights to both buyers and sellers.  
+
+
+Don't use formulas here or be too statistical. This section is for the 
+wider audience. 
+
+Everybody should write three to four sentences.
+
+
+# Appendix A
+
+[Introduction to Data Science:rafalab.dfci.harvard.edu/dsbook/regression.html](https://rafalab.dfci.harvard.edu/dsbook/regression.html)
+
+
+[Kaggle Used Car Dataset](https://www.kaggle.com/datasets/ayushparwal2026/cars-dataset?resource=download)
+
+[Introduction to Statistical Learning](https://www.statlearning.com)
+
