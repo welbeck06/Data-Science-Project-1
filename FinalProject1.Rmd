@@ -76,6 +76,7 @@ levels(used_cars$Fuel_Type)
 summarized_data <- used_cars %>%
   group_by(Fuel_Type) %>%
   summarise(mean_price = mean(Price, na.rm = TRUE))
+
 summarized_data
 
 ggplot(summarized_data, aes(x = Fuel_Type, y = mean_price, fill = Fuel_Type)) +
@@ -119,12 +120,9 @@ ggplot(cor_melted, aes(Var1, Var2, fill = value)) +
 
 ```
 
+
 The correlation heatmap illustrates the relationships between several variables in the dataset. There is a strong positive correlation between years used and mileage, indicating that older cars tend to have more kilometers driven, which is expected as vehicles accumulate usage over time. Both years used and mileage have negative correlations with price, showing that as a car gets older and its mileage increases, its value usally decreases, with mileage having a slightly stronger impact. On the other hand, engine size and power have a positive correlation, as cars with larger engines tend to produce more power. Both of these variables also shows strong positive correlations with price, suggesting that vehicles with larger engines and higher horsepower are generally priced higher due to their performance capabilities. There is a weak correlation between mileage and engine size, suggesting that engine size doesn't significantly impact how much a vehicle is driven. Overall, the heatmap highlights how engine performance factors positively influence price, while usage-related factors like mileage and years used negatively affect a vehicle's value.
 
-
-# Statistical Methods
-
-Regression 
 
 Regression is a statistical method used to understand the relationship between one dependent variable and one or more independent variables. This model helps us to quantify how a change in the independent variables are linked with changes in the dependent variable, making this model a tool to help us make predictions and analysis. For example in our project, the dependent variable is the price while the independent variables are (Kilometers_Driven, Fuel_Type, Mileage, Transmission, Power, etc.). So we are using the multi linear regression model to see how each independent variable effects the price of used cars.  
 
@@ -134,6 +132,7 @@ The model could be expressed as:
     $Y= B_0 + B_1 X_1 + B_2X_2... B_nX_n + \epsilon$
     
  Where $Y$ is the dependent variable, $B_i$ are the coefficients and $X's$ are the input or independent variables.
+
 
 # Results
 
@@ -170,10 +169,6 @@ used_cars$Predicted_Price <- predicted_prices
 head(used_cars)
 
 ```
-
-Write estimated final models. Give details. Interpret 
-models and/or coefficients. What do your models say? Do the two 
-models send the same message? What are the important inputs? 
 
 ## Final Estimated Model
 $Price = -4.007745 + 0.286751 *  Fuel_TypeDiesel + 7.647819 * Fuel_TypeElectric + 0.466173 * Fuel_TypeLPG - 1.525186 * Fuel_TypePetrol + 0.134369 * Mileage - 3.411968 * TransmissionManual + 0.119207 * Power + \epsilon$ 
@@ -214,7 +209,6 @@ This scatter plot shows the relationship between the actual price and the predic
 Overall, Our research on the used car market helped us to discover some of the features that is considered when determining the price of a used car. By building a multiple linear regression model, we were able to discover that fuel type, mileage, transmission and enginepower are the influence in predicting the price of used cars. Notably, engine power and transmission type were found to be critical, with automatic transmission and higher engine power associated with higher vehicle prices. dditionally, while mileage has a negative correlation with price, indicating that cars with higher kilometers tend to be priced lower, the car's age (years used) showed only a modest effect on pricing, suggesting that other factors like engine condition and mileage play a more significant role.
 
 The model achieved reasonable predictive accuracy with an R-squared value of 0.518, indicating that approximately 51.8% of the variance in used car prices can be explained by the variables included in the model. This makes it a useful tool for buyers, sellers, and analysts in estimating fair market prices. While the model performs well, future enhancements could include additional variables such as the car's condition, accident history, or even regional pricing differences to further improve its predictive power. This research offers valuable contributions to the understanding of used
-
 
 
 # Appendix A
