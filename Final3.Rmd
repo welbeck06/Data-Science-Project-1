@@ -133,10 +133,14 @@ Regression is a statistical method used to understand the relationship between o
 The statistical technique we plan to use is a multi linear regression model to answer our regression question. 
 The model could be expressed as:
 
+<<<<<<< HEAD
 $Y= β_0 + β_1*X_1 + β_2*X_2... β_n*X_n + /episolon/
 
 
 
+=======
+$Y= β_0 + β_1*X_1 + β_2*X_2... β_n*X_n + \episolon4$
+>>>>>>> af4b675b311a14e99c86892e9d91110153acbcb1
 
 
 # Results
