@@ -224,6 +224,8 @@ Muhyadin:
 
 In this project, we used the mtcars data to predict used car prices and analyze used car markets focusing on factors that influence car prices such as, manufacturer, model, year, engine type, kilometers driven, etc... By using multi linear regression model, our aim is to predict used car prices based on the characteristics in the data. This model is aimed to provide valuable insights to both buyers and sellers.  
 
+Jordan:
+This project provided valuable insights into how variables like fuel type, engine power, and transmission type significantly affect used car prices. The regression model identified key factors like engine performance and fuel type as important price predictors, while factors like kilometers driven had less influence. One thing I would have liked to explore further is the role of additional features (like luxury upgrades) in predicting price, but this was not included in the dataset.It was surprising to see that kilometers driven had less impact on price than expected, which contradicted typical market assumptions.
 
 Don't use formulas here or be too statistical. This section is for the 
 wider audience. 
