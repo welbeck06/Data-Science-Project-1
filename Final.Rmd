@@ -203,6 +203,10 @@ ggplot(used_cars_data, aes(x = Price, y = predicted_prices)) +
 
 # Conclusions
 
+Muhyadin:
+
+In this project, we used the mtcars data to predict used car prices and analyze used car markets focusing on factors that influence car prices such as, manufacturer, model, year, engine type, kilometers driven, etc... By using multi linear regression model, our aim is to predict used car prices based on the characteristics in the data. This model is aimed to provide valuable insights to both buyers and sellers.  
+
 What did you learn? What else would you have wanted to know but couldn't?
 Is something looking weird / surprising / unexpected?
 
