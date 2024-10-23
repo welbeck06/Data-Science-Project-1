@@ -96,7 +96,7 @@ used_cars$Power <- as.numeric(gsub("[^0-9.]", "", used_cars$Power))
 # Calculate 'Years_Used'
 used_cars$Years_Used <- 2024 - used_cars$Year
 
-selected_data <- used_cars[, c("Price", "Power", "Engine", "Kilometers_Driven", "Years_Used")]
+selected_data <- used_cars[, c("Price", "Power", "Engine", "Mileage", "Years_Used")]
 
 
 selected_data <- na.omit(selected_data)
