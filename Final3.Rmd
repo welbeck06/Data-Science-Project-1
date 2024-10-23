@@ -81,6 +81,7 @@ summarized_data <- used_cars %>%
 
 ggplot(summarized_data, aes(x = Fuel_Type, y = mean_price, fill = Fuel_Type)) +
   geom_bar(stat = "identity") +  # Use 'identity' since we're passing the pre-calculated values
+  ylim(0,13) +
   labs(title = "Fuel Type vs Mean Price", x = "Fuel Type", y = "Mean Price") +
   theme_minimal()
 ```
