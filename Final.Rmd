@@ -67,6 +67,18 @@ ggplot(used_cars, aes(x = Price)) +
 ```
 In our exploratory of the data, we observe that the price range of most used cars is around $10,000 USD.
 
+```{r}
+levels(used_cars$Fuel_Type)
+```
+
+
+```{r}
+ggplot(used_cars, aes(x = Fuel_Type, y = Price, fill = Fuel_Type)) +
+  geom_boxplot() +
+  labs(title = "Fuel Type vs Price", x = "Fuel Type", y = "Price")
+```
+Need explanation:
+
 
 ```{r}
 # Load necessary libraries
@@ -82,19 +94,15 @@ used_cars$Power <- as.numeric(gsub("[^0-9.]", "", used_cars$Power))
 # Calculate 'Years_Used'
 used_cars$Years_Used <- 2024 - used_cars$Year
 
-# Filter the data to include only the selected columns
 selected_data <- used_cars[, c("Price", "Power", "Engine", "Kilometers_Driven", "Years_Used")]
 
-# Remove rows with missing values
+
 selected_data <- na.omit(selected_data)
 
-# Create a correlation matrix
 cor_matrix <- cor(selected_data, use = "complete.obs")
 
-# Melt the correlation matrix for ggplot
 cor_melted <- melt(cor_matrix)
 
-# Plot the heatmap with a blue-white-green color gradient and scale set from -1 to 1
 ggplot(cor_melted, aes(Var1, Var2, fill = value)) +
   geom_tile() +
   scale_fill_gradient2(low = "brown", mid = "white", high = "darkblue", midpoint = 0, limits = c(-1, 1)) +
@@ -117,7 +125,7 @@ backward selection, etc. Write formulas. Explain why you chose
 to use these two techniques. 
 
 Explain Regression(Jordan)
-Regression is a statistical method used to understand the relationship between different variables.The goal of regression is to understand how the dependent variable changes when the independent variables are varied. This helps in predicting future values of the dependent variable. Our statistical approach will be to create a linear regression model
+Regression is a statistical method used to understand the relationship between different variables.The goal of regression is to understand how the dependent variable changes when the independent variables are varied. This helps in predicting future values of the dependent variable. Our statistical approach will be to create a linear regression model.
 
 
 
@@ -132,31 +140,31 @@ Regression is a statistical method used to understand the relationship between d
 library(dplyr)
 library(ggplot2)
 
-used_cars_data <- read.csv("used_cars_data.csv")
+#used_cars <- read.csv("used_cars_data.csv")
 
-used_cars_data$Mileage <- as.numeric(gsub(" km/kg| kmpl", "", used_cars_data$Mileage))
-used_cars_data$Engine <- as.numeric(gsub(" CC", "", used_cars_data$Engine))
-used_cars_data$Power <- as.numeric(gsub(" bhp", "", used_cars_data$Power))
+used_cars$Mileage <- as.numeric(gsub(" km/kg| kmpl", "", used_cars$Mileage))
+used_cars$Engine <- as.numeric(gsub(" CC", "", used_cars$Engine))
+used_cars$Power <- as.numeric(gsub(" bhp", "", used_cars$Power))
 
 
-used_cars_data <- used_cars_data %>%
+used_cars <- used_cars %>%
   mutate(across(where(is.numeric), ~ ifelse(is.na(.), median(., na.rm = TRUE), .)))
 
-used_cars_data$Fuel_Type <- as.factor(used_cars_data$Fuel_Type)
-used_cars_data$Transmission <- as.factor(used_cars_data$Transmission)
-used_cars_data$Location <- as.factor(used_cars_data$Location)
+used_cars$Fuel_Type <- as.factor(used_cars$Fuel_Type)
+used_cars$Transmission <- as.factor(used_cars$Transmission)
+used_cars$Location <- as.factor(used_cars$Location)
 
-used_cars_data$Year <- factor(used_cars_data$Year)
+used_cars$Year <- factor(used_cars$Year)
 
-unique_years <- sort(unique(used_cars_data$Year))
-used_cars_data$Year <- factor(used_cars_data$Year, levels = unique_years)
+unique_years <- sort(unique(used_cars$Year))
+used_cars$Year <- factor(used_cars$Year, levels = unique_years)
 
-model <- lm(Price ~  Kilometers_Driven  + Fuel_Type +  Mileage + Transmission + Power, data = used_cars_data)
+model <- lm(Price ~  Kilometers_Driven  + Fuel_Type +  Mileage + Transmission + Power, data = used_cars)
 summary(model)
 
-predicted_prices <- predict(model, used_cars_data)
-used_cars_data$Predicted_Price <- predicted_prices
-head(used_cars_data)
+predicted_prices <- predict(model, used_cars)
+used_cars$Predicted_Price <- predicted_prices
+head(used_cars)
 
 ```
 
@@ -172,21 +180,27 @@ The estimated model for the price of a used car considering the different variab
 
 
 ## Model Interpertation 
+```{r}
+anova(model)
+levels(used_cars$Fuel_Type)
+```
+From our analysis table, our Sum of squares explains the variation by each variable, Transmission has a large samount of variation with a sum of squares of 128,069 indicating that the variable transmission explains more variation of the price of a used car. Similarly, Power also has slightly large amount of variation with sum of squares of 125,783. Mileage and fuel type also as some significance of variation in explaining of our response variable(Price). Lastly Kilometer driven xplains very little of the variation of the price of used cars.
 
-- Intercept (-3.636e+00) : Tells us the price of a used car, assuming the the other variables equals zero.
-- Kilometer Driven (-3.666e-06) :
-- Fuel type 
-- Mileage
-- Transmission
+Each of the mean square of our variable was calculated by dividing our sum of squares by the degree of freedom which helps us understand how much variation each factor explains per degree of freedom.
+
+The F-value is the ratio of the mean square of each variable to the mean square of the residuals. A higher F-value indicates a more significant effect on the price of a used car. As an illustration, the F-value for the variable transmission is 2510.90, suggesting that transmission has a highly significant effect on the price of a used car, similar, Power, Mileage and Fuel type also have some significance effect on the price of used cars. Kilometer driven on the other hand, has a small F-value of 1.84, suggesting there's a small significant effect on price.   
+
+Similar to F-value, the p-value also tells us whether the variable has a statistically sihnificant effect on the price of used cars. A very small p-value which is less than 0.05 indicates that our predicted variable has statistically significant impact on the price. We observe our p-value for kilometer driven to be 0.1746 which is greater than 0.05, suggesting that kilometer driven does not significantly impact the price of used cars. All of the other variables(Fuel type, Mileage, Transmission and Power) have highly statistical significant impact on price because their p - value are less than 0.05.
+
+
+In conclusion, Fuel_Type, Mileage, Transmission, and Power are key drivers of Price. Kilometers_Driven does not significantly affect Price, as indicated by its high p-value (0.1746).
 
 
 Make plots of your models if possible. 
 
 
-
-
-```{r,  fig.cap="\\label{fig:q1b} The relationship between sepal and petal lenghts", fig.width = 6, fig.height = 5}
-ggplot(used_cars_data, aes(x = Price, y = predicted_prices)) +
+```{r,  fig.cap="\\label{fig:q1b} The relationship between Actual and Predicted Prices", fig.width = 6, fig.height = 5}
+ggplot(used_cars, aes(x = Price, y = predicted_prices)) +
   geom_point(color = "blue") +
   geom_abline(slope = 1, intercept = 0, color = "red", linetype = "dashed") +
   ggtitle("Actual vs Predicted Prices") +
@@ -211,4 +225,10 @@ Everybody should write three to four sentences.
 
 # Appendix A
 
-If you need it. 
+[Introduction to Data Science:rafalab.dfci.harvard.edu/dsbook/regression.html](https://rafalab.dfci.harvard.edu/dsbook/regression.html)
+
+
+[Kaggle Used Car Dataset](https://www.kaggle.com/datasets/ayushparwal2026/cars-dataset?resource=download)
+
+[Introduction to Statistical Learning](https://www.statlearning.com)
+
