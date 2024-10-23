@@ -1,0 +1,11 @@
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Reserach questions}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Data set desription}{2}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Exploratory Data Analysis}{3}{section.2}%
+\contentsline {section}{\numberline {3}Statistical Methods}{7}{section.3}%
+\contentsline {section}{\numberline {4}Results}{7}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Regression}{7}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Final Estimated Model}{10}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Model Interpertation}{10}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Conclusions}{13}{section.5}%
+\contentsline {section}{\numberline {6}Appendix A}{13}{section.6}%
