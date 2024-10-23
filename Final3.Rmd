@@ -75,9 +75,14 @@ levels(used_cars$Fuel_Type)
 
 
 ```{r}
-ggplot(used_cars, aes(x = Fuel_Type, y = Price, fill = Fuel_Type)) +
-  geom_boxplot() +
-  labs(title = "Fuel Type vs Price", x = "Fuel Type", y = "Price")
+summarized_data <- used_cars %>%
+  group_by(Fuel_Type) %>%
+  summarise(mean_price = mean(Price, na.rm = TRUE))
+
+ggplot(summarized_data, aes(x = Fuel_Type, y = mean_price, fill = Fuel_Type)) +
+  geom_bar(stat = "identity") +  # Use 'identity' since we're passing the pre-calculated values
+  labs(title = "Fuel Type vs Mean Price", x = "Fuel Type", y = "Mean Price") +
+  theme_minimal()
 ```
 Need explanation:
 
