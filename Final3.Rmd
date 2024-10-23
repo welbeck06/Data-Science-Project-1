@@ -86,7 +86,7 @@ ggplot(summarized_data, aes(x = Fuel_Type, y = mean_price, fill = Fuel_Type)) +
   theme_minimal()
 ```
 Need explanation:
-
+The bar chart shows the mean price of vehicles for different fuel types (CNG, Diesel, Electric, LPG, and Petrol). Electric vehicles lead with the highest average price, likely due to their advanced battery technology and the growing market demand for environmentally friendly transportation. This reflects the higher initial costs associated with producing and purchasing electric vehicles compared to conventional fuel types. Diesel vehicles follow closely behind, with a high mean price attributed to their fuel efficiency and durability, making them more valuable, particularly for long-distance driving. Diesel cars are often favored in markets where longevity and fuel economy are prioritized. Petrol vehicles sit in the middle, with a lower average price than both electric and diesel vehicles. This reflects their widespread availability and affordability, offering a balance between performance and cost that appeals to a broad consumer base. LPG and CNG vehicles have the lowest mean prices, with CNG being the most affordable. These fuel types are typically more economical and are favored for their cost-effectiveness in certain markets, although they are less common. The lower demand and reduced market value for these vehicles are reflected in their lower average prices. In summary, electric and diesel vehicles command higher prices due to technological advancements and performance benefits, while petrol, CNG, and LPG vehicles offer more budget-friendly options.
 
 ```{r}
 # Load necessary libraries
@@ -122,7 +122,7 @@ ggplot(cor_melted, aes(Var1, Var2, fill = value)) +
 
 Jordan :Need explain the correlation graph
 The correlation heatmap illustrates the relationships between several variables in the dataset. There is a strong positive correlation between years used and mileage, indicating that older cars tend to have more kilometers driven, which is expected as vehicles accumulate usage over time. Both years used and mileage have negative correlations with price, showing that as a car gets older and its mileage increases, its value usally decreases, with mileage having a slightly stronger impact. On the other hand, engine size and power have a positive correlation, as cars with larger engines tend to produce more power. Both of these variables also shows strong positive correlations with price, suggesting that vehicles with larger engines and higher horsepower are generally priced higher due to their performance capabilities. There is a weak correlation between mileage and engine size, suggesting that engine size doesn't significantly impact how much a vehicle is driven. Overall, the heatmap highlights how engine performance factors positively influence price, while usage-related factors like mileage and years used negatively affect a vehicle's value.
-# Statistical Methods
+# Statistical Methodsff
 
 Regression 
 
@@ -132,7 +132,7 @@ The statistical technique we plan to use is a multi linear regression model to a
 The model could be expressed as:
 
 $Y= B_0 + B_1 * X_1 + B_2 * X_2... B_n * X_n + \episolon4$
-
+f
 
 # Results
 
@@ -210,6 +210,7 @@ ggplot(used_cars, aes(x = Price, y = predicted_prices)) +
   ylab("Predicted Price") +
   theme_minimal()
 ```
+The scatter plot compares the real prices of vehicles to those predicted by a model. Ideally, if the model perfectly predicted prices, all points would align along the diagonal red line, indicating an exact match between actual and predicted values. However, in this plot, there is noticeable dispersion, particularly as prices increase. While the model performs reasonably well for lower price ranges (as shown by the dense cluster near the bottom), its accuracy decreases for higher price predictions, suggesting that the model struggles to capture the dynamics of higher-priced vehicles. (welbeck is this okay)
 
 
 
