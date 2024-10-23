@@ -119,28 +119,14 @@ The correlation heatmap highlights the relationships between different factors a
 
 # Statistical Methods
 
-## Regression 
+Regression 
 
-What are the two statistical techniques you plan to use to answer your 
-regression question? Give details here. Name variables, 
-write out models (using $\beta_i$'s), let me know if you're using CV,
-backward selection, etc. Write formulas. Explain why you chose
-to use these two techniques. 
-
-Explain Regression(Jordan)
 Regression is a statistical method used to understand the relationship between one dependent variable and one or more independent variables. This model helps us to quantify how a change in the independent variables are linked with changes in the dependent variable, making this model a tool to help us make predictions and analysis. For example in our project, the dependent variable is the price while the independent variables are (Kilometers_Driven, Fuel_Type, Mileage, Transmission, Power, etc.). So we are using the multi linear regression model to see how each independent variable effects the price of used cars.  
 
 The statistical technique we plan to use is a multi linear regression model to answer our regression question. 
 The model could be expressed as:
 
-<<<<<<< HEAD
-$Y= β_0 + β_1*X_1 + β_2*X_2... β_n*X_n + /episolon/
-
-
-
-=======
-$Y= β_0 + β_1*X_1 + β_2*X_2... β_n*X_n + \episolon4$
->>>>>>> af4b675b311a14e99c86892e9d91110153acbcb1
+$Y= B_0 + B_1 * X_1 + B_2 * X_2... B_n * X_n + \episolon4$
 
 
 # Results
