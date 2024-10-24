@@ -1,7 +1,7 @@
 ---
 title: "Statistical Analysis of Used Cars Data"
 author: "Welbeck Achiampong, Muhyadin Yusuf,  Minh Pham, and Jordan Addo"
-date: "\today"
+date: "October 23rd 2024"
 output:
   pdf_document:
     number_sections: true
