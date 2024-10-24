@@ -203,15 +203,6 @@ ggplot(used_cars, aes(x = Price, y = predicted_prices)) +
   theme_minimal()
 ```
 
-
-
-
-
-
-
-
-
-
 This scatter plot shows the relationship between the actual price and the predicted price of used cars, with the actual price on the x-axis and the predicted price on the y-axis. Each blue dot represents a data point, which corresponds to a specific car's actual and predicted price. The red dashed line represents the line of perfect prediction, where the predicted price would exactly match the actual price (i.e., the line where  $y = x$). Notice most of the data points are clustered near the lower values suggesting that the predictive model makes relatively accurate prediction for lower priced cars, but is less accurate for higher priced cars. For the points over or under the the red line, this could be factors of not including specific variables in our data, or the model has over predicted oor under predicted the price compared to the actual value. Overall, while the model performs well for lower-priced cars, it seems to struggle with accurately predicting a higher priced cars.
 
 
