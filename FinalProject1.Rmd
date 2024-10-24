@@ -67,16 +67,14 @@ ggplot(used_cars, aes(x = Price)) +
 ```
 In our exploratory of the data, we observe the price on the x-axis and the number of cars (frequency) on the y-axis. We observe that the price range of most used cars is around $10,000 USD. 
 
-```{r}
-levels(used_cars$Fuel_Type)
-```
-
 
 ```{r}
 summarized_data <- used_cars %>%
   group_by(Fuel_Type) %>%
   summarise(mean_price = mean(Price, na.rm = TRUE))
 summarized_data
+
+#levels(used_cars$Fuel_Type)
 
 ggplot(summarized_data, aes(x = Fuel_Type, y = mean_price, fill = Fuel_Type)) +
   geom_bar(stat = "identity") +  
@@ -131,7 +129,7 @@ Regression is a statistical method used to understand the relationship between o
 The statistical technique we plan to use is a multi linear regression model to answer our regression question. 
 The model could be expressed as:
 
-    $Y = B_0 + B_1 X_1 + B_2X_2....B_nX_n + \epsilon$
+$Y = B_0 + B_1 X_1 + B_2X_2....B_nX_n + \epsilon$
     
  Where $Y$ is the dependent variable, $B_i$ are the coefficients and $X's$ are the input or independent variables.
 
@@ -208,7 +206,7 @@ This scatter plot shows the relationship between the actual price and the predic
 
 # Conclusions
 
-Overall, Our research on the used car market helped us to discover some of the features that is considered when determining the price of a used car. By building a multiple linear regression model, we were able to discover that fuel type, mileage, transmission and enginepower are the influence in predicting the price of used cars. Notably, engine power and transmission type were found to be critical, with automatic transmission and higher engine power associated with higher vehicle prices. dditionally, while mileage has a negative correlation with price, indicating that cars with higher kilometers tend to be priced lower, the car's age (years used) showed only a modest effect on pricing, suggesting that other factors like engine condition and mileage play a more significant role.
+Overall, Our research on the used car market helped us to discover some of the features that is considered when determining the price of a used car. By building a multiple linear regression model, we were able to discover that fuel type, mileage, transmission and engine power are the main influence in predicting the price of used cars. Notably, engine power and transmission type were found to be critical, with automatic transmission and higher engine power associated with higher vehicle prices. dditionally, while mileage has a negative correlation with price, indicating that cars with higher kilometers tend to be priced lower, the car's age (years used) showed only a modest effect on pricing, suggesting that other factors like engine condition and mileage play a more significant role.
 
 The model achieved reasonable predictive accuracy with an R-squared value of 0.518, indicating that approximately 51.8% of the variance in used car prices can be explained by the variables included in the model. This makes it a useful tool for buyers, sellers, and analysts in estimating fair market prices. While the model performs well, future enhancements could include additional variables such as the car's condition, accident history, or even regional pricing differences to further improve its predictive power. This research offers valuable contributions to the understanding of used
 
