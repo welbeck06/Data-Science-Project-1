@@ -29,7 +29,7 @@ used_cars <- read.csv("used_cars_data.csv")
 
 # Introduction
 
-This project aims to explore the used car market by analyzing the factors that influence the pricing of used cars. With the increasing demand for used vehicles, understanding how various features like the manufacturer, model, year, engine type, and kilometers driven impact the price can help consumers and dealers alike make informed decisions. The dataset, `used_cars_data.csv`, contains information on these attributes, offering insights into how different features contribute to the sale price of a car. By developing a predictive model, we can provide a more accurate estimate of a used car's value based on its characteristics, making this research valuable for both buyers and sellers in the used car market.
+This project aims to explore the used car market by analyzing the factors that influence the pricing of used cars. With the increasing demand for used vehicles, understanding how various features like the Brand, model, year, engine type, mileage and kilometers driven impact the price can help consumers and dealers alike make informed decisions. The dataset, `used_cars_data.csv`, contains information on these attributes, offering insights into how different features contribute to the sale price of a car. By developing a predictive model, we can provide a more accurate estimate of a used car's value based on its characteristics, making this research valuable for both buyers and sellers in the used car market.
 
 To address this, we will build a linear regression model to estimate the price based on these features. The model will follow the general equation $Y = B_0 + B_1 x_1 + B_2 x_2$ where $Y$ is the response variable(pricted price) and the $B's$ represents the coefficients and the $x's$ are the input variables. Through pre-processing the data and ensuring it is clean and normalized yo be able to accurately predict the price of used cars.
 
@@ -41,23 +41,21 @@ Our research question is to determine whether a model can effectively predict th
 
 The dataset, used_cars_data.csv, contains information about used cars and their sale prices. There are several variables present in the dataset, including:
 
-- Manufacturer: the car manufacturer (e.g. Toyota, Ford, Honda, etc.) 
+- Brand: the car name (e.g. Toyota, Ford, etc.) 
 
-- Model: the specific car model (e.g. Corolla, Mustang, Accord, etc.) 
+- Mileage: the number of miles the car has traveled
 
-- Location: The place of the car (e.g. Mumbai, Pune, Jaipur, etc.) 
+- Year: the year the car was released (e.g. 2011, 2013, 2015, etc.) 
 
-- Year: the year the car was released (e.g. 2010, 2014, 2015, etc.) 
+- Engine Power: the number of cylinders in the engine 
 
-- Engine: the number of cylinders in the engine 
+- Fuel_type : the type of fuel the car uses (e.g. gas, diesel, electric, lpg) 
 
-- Fuel_type : the type of fuel the car uses (e.g. gas, diesel, electric) 
-
-- Kilometer_Driven: the total distance the car has traveled 
+- Kilometer_Driven: the total distance the car has been driven
 
 - Transmission: the type of transmission (e.g. automatic, manual) 
 
-Using this data, we can develop a model to predict the sale price of a used car based on these variables.
+Using this data, we can hope to develop a model to predict the sale price of a used car based on some of these features.
 
 # Exploratory Data Analysis
 ```{r}
@@ -92,22 +90,22 @@ library(reshape2)
 library(dplyr)
 
 
-used_cars$Mileage <- as.numeric(gsub("[^0-9.]", "", used_cars$Mileage))
-used_cars$Engine <- as.numeric(gsub("[^0-9.]", "", used_cars$Engine))
-used_cars$Power <- as.numeric(gsub("[^0-9.]", "", used_cars$Power))
+used_cars$Mileage <- as.numeric(gsub("km/kg| kmpl", "", used_cars$Mileage))
+used_cars$Engine <- as.numeric(gsub("CC", "", used_cars$Engine))
+used_cars$Power <- as.numeric(gsub("bhp", "", used_cars$Power))
 
 
 used_cars$Years_Used <- 2024 - used_cars$Year
 
-selected_data <- used_cars[, c("Price", "Power", "Engine", "Mileage", "Years_Used")]
+subset_data <- used_cars[, c("Price", "Power", "Engine", "Mileage", "Years_Used")]
 
-selected_data <- na.omit(selected_data)
+subset_data <- na.omit(subset_data)
 
-cor_matrix <- cor(selected_data, use = "complete.obs")
+cor_matrix <- cor(subset_data, use = "complete.obs")
 
-cor_melted <- melt(cor_matrix)
+cor <- melt(cor_matrix)
 
-ggplot(cor_melted, aes(Var1, Var2, fill = value)) +
+ggplot(cor, aes(Var1, Var2, fill = value)) +
   geom_tile() +
   scale_fill_gradient2(low = "brown", mid = "white", high = "darkblue", midpoint = 0, limits = c(-1, 1)) +
   theme_minimal() +
@@ -142,7 +140,6 @@ $Y = B_0 + B_1 X_1 + B_2X_2....B_nX_n + \epsilon$
 library(dplyr)
 library(ggplot2)
 
-#used_cars <- read.csv("used_cars_data.csv")
 
 used_cars$Mileage <- as.numeric(gsub(" km/kg| kmpl", "", used_cars$Mileage))
 used_cars$Engine <- as.numeric(gsub(" CC", "", used_cars$Engine))
